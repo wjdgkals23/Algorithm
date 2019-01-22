@@ -65,6 +65,7 @@ public class Baek1011 {
 				}
 				System.out.println(ans+1);
 			}
+			sc.close();
 		}
 	}
 

@@ -27,6 +27,7 @@ public class Baek11048 {
 		}
 		findvalue(x,y);
 		System.out.println(map[x][y]);
+		sc.close();
 		
 	}
 

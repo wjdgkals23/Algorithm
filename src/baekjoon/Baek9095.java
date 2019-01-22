@@ -34,7 +34,7 @@ public class Baek9095 {
 			System.out.println(values[target]);
 		}
 		
-		
+		sc.close();
 		
 	}
 
