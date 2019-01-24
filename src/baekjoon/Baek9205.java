@@ -6,19 +6,19 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class Node {
-	int x;
-	int y;
-	int ind;
-	
-	Node(int x, int y, int ind){
-		this.x= x;
-		this.y= y;
-		this.ind= ind;
-	}
-}
-
 public class Baek9205 {
+	
+	public static class Node {
+		int x;
+		int y;
+		int ind;
+		
+		Node(int x, int y, int ind){
+			this.x= x;
+			this.y= y;
+			this.ind= ind;
+		}
+	}
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
