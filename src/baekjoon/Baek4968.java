@@ -24,9 +24,7 @@ public class Baek4968 {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader buf = new BufferedReader(new InputStreamReader(System.in));
-		boolean say = true;
 		while(true) {
-			say = true;
 			String sen = buf.readLine();
 			if(sen.equals("0 0")) {
 				break;
