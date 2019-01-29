@@ -67,8 +67,8 @@ public class Baek11657 {
     			continue;
     		}
     		if(D[edgeArray[l].to] > D[edgeArray[l].from]+edgeArray[l].cost) { // 더 작을 경우 업데이트 
-    			D[edgeArray[l].to] = D[edgeArray[l].from]+edgeArray[l].cost;
     			flag = true;
+    			break;
     		}
     	}
 	    
