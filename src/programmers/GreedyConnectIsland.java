@@ -21,6 +21,8 @@ public class GreedyConnectIsland {
         boolean [] visited = new boolean [n+1];
 //        cycle 인지 확인해야하네.... 추가하려는 간선의 꼭지점이 둘 다 true이면 cycle이다!!! 
 //      간선을 오름차순으로 정리하고 가장 처음것부터 하나씩 추가해나가자!!
+//      간선을 추가하면서 섬들을 추가해나갈때 합집합 알고리즘을 이용해야한다.
+//      아직 초기 해결방안에 대해 반례를 찾지 못했다.
         LinkedList<Vertex> list = new LinkedList<Vertex>();
         for(int i=0; i<costs.length; i++) {
         	int a = costs[i][0];
