@@ -3,6 +3,7 @@ package programmers;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 public class GreedyConnectIsland {
 	
@@ -30,59 +31,53 @@ public class GreedyConnectIsland {
 //      간선을 오름차순으로 정리하고 가장 처음것부터 하나씩 추가해나가자!!
 //      간선을 추가하면서 섬들을 추가해나갈때 합집합 알고리즘을 이용해야한다.
 //      아직 초기 해결방안에 대해 반례를 찾지 못했다. -> 간선이 추가되었을 때가 아닌 섬이 추가된 것을 확인하고 추가해야한다.
-        LinkedList<Vertex> list = new LinkedList<Vertex>();
-        for(int i=0; i<costs.length; i++) {
-        	int a = costs[i][0];
-        	int b = costs[i][1];
-        	int c = costs[i][2];
-        	list.add(new Vertex(a, b, c));
-        }
-        
-        list.sort(new Comparator<Vertex>() {
-			@Override
-			public int compare(Vertex o1, Vertex o2) {
-				// TODO Auto-generated method stub
-				if(o1.cost > o2.cost) {
-					return 1;
-				}
-				else {
-					return -1;
-				}
-			}
-		});
+        PriorityQueue<Vertex> queue = new PriorityQueue<Vertex>(new Comparator<Vertex>() {
+            public int compare(Vertex o1, Vertex o2) {
+                if(o1.cost < o2.cost){
+                    return -1;
+                }
+                return 1;
+            }
+        });
+        for(int i=0; i<costs.length; i++){
+            int from = costs[i][0];
+            int to = costs[i][1];
+            int cost = costs[i][2];
+
+            queue.offer(new Vertex(from,to,cost));
+        };
         
         HashSet<Integer> set = new HashSet<Integer>();
         
-        while(!list.isEmpty()) {
-        	Vertex temp = list.removeFirst();
+        while(!queue.isEmpty()) {
+        	Vertex temp = queue.poll();
+        	System.out.println(temp.cost);
         	int start = temp.start;
         	int end = temp.end;
-        	if(!set.contains(end)&&!set.contains(start)) {
+        	if(!set.contains(end) && !set.contains(start)) {
         		set.add(end);
         		set.add(start);
         		union(end,start);
-        		showparent();
+//        		showparent();
         		answer+=temp.cost;
         	}
-        	else if(!set.contains(end)&&set.contains(start)) { // start는 이미 군집에 포함되어있는 경우 
+        	else if(!set.contains(end) && set.contains(start)) { // start는 이미 군집에 포함되어있는 경우 
         		set.add(end);
         		union(end,start);
-        		showparent();
+//        		showparent();
         		answer+=temp.cost;
         	}
         	else if(set.contains(end)&&!set.contains(start)) { // start는 이미 군집에 포함되어있는 경우 
         		set.add(start);
         		union(end,start);
-        		showparent();
         		answer+=temp.cost;
         	}
         	else { // 이미 같은 싸이클에 있는 경우와 서로 다른 싸이클에 포함되어있는 경우로 나뉜다. 
-        		if(findparent(end) == findparent(start)) {
+        		if(find(end) == find(start)) {
         			continue;
         		}
         		else {
         			union(end,start);
-        			showparent();
         			answer+=temp.cost;
         		}
         	}
@@ -98,19 +93,28 @@ public class GreedyConnectIsland {
 		System.out.println();
 	}
 	
-	public static int findparent(int n) {
-		return parent[n]==n ? n : findparent(parent[n]);
-	}
-	
-	public static void union(int a, int b) { // 함수 수정 
-		int a_ = findparent(a);
-		int b_ = findparent(b);
-		
-		if(a_<b_) {
+	public static int find(int n){
+        LinkedList<Integer> stack = new LinkedList<Integer>();
+//        union 의 루트를 찾는 과정 
+        while(parent[n] != n){ 
+            stack.add(n);
+            n = parent[n];
+        }
+//        루트값으로 지정되지 않은 값들 수정하기 
+        while(stack.size() > 0){
+            parent[stack.poll()] = n;
+        }
+        return n;
+    }
 
-		}
-		else parent[a] = b_;
-	}
+    public static void union(int a, int b){
+        int fa = find(a);
+        int fb = find(b);
+        if(fa < fb)
+        	parent [fb] = fa;
+        else
+        	parent [fa] = fb;
+    }
 	
 	public static void main(String[] args) {
 		int n = 4;
