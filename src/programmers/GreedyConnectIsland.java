@@ -2,6 +2,7 @@ package programmers;
 
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
@@ -31,6 +32,8 @@ public class GreedyConnectIsland {
 //      간선을 오름차순으로 정리하고 가장 처음것부터 하나씩 추가해나가자!!
 //      간선을 추가하면서 섬들을 추가해나갈때 합집합 알고리즘을 이용해야한다.
 //      아직 초기 해결방안에 대해 반례를 찾지 못했다. -> 간선이 추가되었을 때가 아닌 섬이 추가된 것을 확인하고 추가해야한다.
+        
+        // 우선순위 큐는 기본적으로 비교하는 값이 같을 경우 알아서 오름차순으로 설정해 준다.
         PriorityQueue<Vertex> queue = new PriorityQueue<Vertex>(new Comparator<Vertex>() {
             public int compare(Vertex o1, Vertex o2) {
                 if(o1.cost < o2.cost){
@@ -46,6 +49,16 @@ public class GreedyConnectIsland {
 
             queue.offer(new Vertex(from,to,cost));
         };
+        
+        Iterator<Vertex> tmp = queue.iterator();
+        
+        while(tmp.hasNext()) {
+        	Vertex vt = tmp.next();
+        	System.out.print(vt.start + " ");
+        	System.out.print(vt.end + " ");
+        	System.out.print(vt.cost);
+        	System.out.println();
+        }
         
         HashSet<Integer> set = new HashSet<Integer>();
         
@@ -118,7 +131,7 @@ public class GreedyConnectIsland {
 	
 	public static void main(String[] args) {
 		int n = 4;
-		int [][] costs = {{0,1,1},{0,2,2},{1,2,5},{1,3,1},{2,3,8}};
+		int [][] costs = {{1,3,1},{0,2,1},{1,2,5},{1,3,1},{2,3,8}};
 		
 		System.out.println(solution(n,costs));
 	}
